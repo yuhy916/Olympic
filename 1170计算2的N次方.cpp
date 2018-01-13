@@ -31,6 +31,7 @@ int mul(int *a)
 		a[a[0]+1] = x;
 		a[0]++;
 	}
+	return 0;
 }
 
 int main()

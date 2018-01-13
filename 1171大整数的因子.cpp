@@ -35,9 +35,9 @@ int mod(int *a, int b, int *c)
 		c[i] = (10 * x + a[i]) / b;
 		x = (10 * x + a[i]) % b;
 	}
-	c[0] = a[0];
-	while (c[c[0]] == 0 && c[0] > 1)
-		c[0]--;
+	c[0] = 1;
+	while (c[c[0]] == 0 && c[0] < a[0])
+		c[0]++;
 	return x;
 }
 

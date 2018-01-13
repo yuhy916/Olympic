@@ -14,36 +14,24 @@
 24
 */
 #include <iostream>
+#include <cstdio>
 #include <cstring>
 using namespace std;
 
-int mul(int *a, int *b, int *c)
+int mul(int *a, int b)
 {
 	int x = 0;
 	for (int i = 1; i <= a[0]; i++)
 	{
-		for (int j = 1; j <= b[0]; j++)
-		{
-			c[i+j-1] = a[i] * b[j] + x + c[i+j-1];
-			x = c[i+j-1] / 10;
-			c[i+j-1] %= 10; 
-		}
-		c[i+b[0]] = x;
+		a[i] = a[i] * b + x;
+		x = a[i] / 10000;
+		a[i] %= 10000; 
 	}
-	c[0] = a[0] + b[0];
-	while (c[c[0]] == 0 && c[0] > 1)
-		c[0]--;
-}
-
-int toB(int *a, int n)
-{
-	int num = 0;
-	while (n)
+	if (x > 0)
 	{
-		a[++num] = n % 10;
-		n /= 10;
+		a[a[0]+1] = x;
+		a[0]++;
 	}
-	a[0] = num+1;
 	return 0;
 }
 
@@ -52,20 +40,15 @@ int main()
 	int n;
 	while (cin >> n)
 	{
-		int a[100000] = {0}, b[10] = {0}, c[100000] = {0};
+		int a[100000] = {0};
 		a[0] = 1;
 		a[1] = 1;
 		for (int i = 2; i <= n; i++)
-		{
-			memset(c, 0, sizeof(c));
-			toB(b, i);
-			mul(a, b, c);
-			for (int j = 0; j <= c[0]; j++)
-				a[j] = c[j];
-		}
-			
-		for (int i = a[0]; i > 0; i--)
-			cout << a[i];
+			mul(a, i);
+		
+		cout << a[a[0]];
+		for (int i = a[0] - 1; i > 0; i--)
+			printf("%.4d", a[i]);
 		cout << endl;
 	}
 	return 0;
