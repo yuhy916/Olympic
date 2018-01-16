@@ -29,45 +29,36 @@
   3  4  5
 */
 #include <iostream>
-#include <iomanip>
+#include <cstdio>
 using namespace std;
 
-int n, r;
-int a[21] = {0}, b[21] = {0};
+int n, r, a[10001] = {0}, b[22] = {0};
 
-int print()
+int func(int x)
 {
-	for (int i = 1; i <= r; i++)
-		cout << setw(3) <<a[i];
-	cout << endl;
-	return 0;
-}
-
-int search(int x)
-{
+	if (x > r)
+	{
+		for (int i = 1; i <= r; i++)
+			printf("%3d", a[i]);
+		printf("\n");
+		return 0;
+	}	
 	for (int i = 1; i <= n; i++)
 	{
 		if (!b[i] && i > a[x-1])
 		{
-			b[i] = 1;
 			a[x] = i;
-			if (x == r)
-				print();
-			else
-				search(x + 1);
+			b[i] = 1;
+			func(x+1);
 			b[i] = 0;
 		}
-		
 	}
 	return 0;
 }
 
 int main()
 {
-	
-	while (cin >> n >> r)
-	{
-		search(1);
-	}
+	cin >> n >> r;
+	func(1);
 	return 0;
 }
